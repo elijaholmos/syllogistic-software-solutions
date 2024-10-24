@@ -12,7 +12,8 @@ export async function POST(request) {
       },
     });
 
-    await emailjs.send("service_h6lo7jb", "template_sis6wkq", body);
+    const res = await emailjs.send("service_h6lo7jb", "template_sis6wkq", body);
+    console.log("send email res", res);
 
     return new Response(`Hello from ${process.env.VERCEL_REGION}`);
   } catch (e) {
