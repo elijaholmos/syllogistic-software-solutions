@@ -1,3 +1,3 @@
-export default function (req, res) {
-  return res.status(200).json({ response: "Test route" });
+export function GET(request) {
+  return new Response(`Hello from ${process.env.VERCEL_REGION}`);
 }
