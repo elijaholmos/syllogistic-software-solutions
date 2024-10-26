@@ -74,8 +74,8 @@
 						is required.
 					</p>
 					<form
+						id="contact-form"
 						name="Contact"
-						method="POST"
 						data-netlify="true"
 						data-netlify-recaptcha="true"
 						netlify-honeypot="bot-field"
@@ -110,7 +110,7 @@
 							</div>
 							<div class="col-xs-12">
 								<div class="styled-input wide">
-									<textarea name="comments" required></textarea>
+									<textarea name="message" required></textarea>
 									<label>Your question or request for additional project details...</label>
 								</div>
 							</div>
@@ -161,5 +161,26 @@
 			<p class="copyright">Copyright &copy; 2024 Syllogistic Software Solutions, LLC</p>
 		</footer>
 		<script src="script.js"></script>
+		<script>
+			window.addEventListener('load', function() {
+				document.querySelector('#contact-form').addEventListener('submit', async (e) => {
+					try {
+						e.preventDefault();
+
+						const data = new FormData(e.target);
+						if(data.get('bot-field') !== '') return alert('Could not submit form. Looks like you may be a bot.');
+
+						await fetch('/api/contact', {
+							method: 'POST',
+							body: JSON.stringify(Object.fromEntries(data))
+						});
+
+						alert('Form submitted successfully!');
+					} catch (err) {
+						alert('There was an error submitting the form. Please try emailing the developer at syllogisticsoftwaresolutions@gmail.com');
+					}
+				})
+			})
+		</script>
 	</body>
 </html>
